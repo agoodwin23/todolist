@@ -1,4 +1,8 @@
 import React, { useState } from 'react';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+import Typography from '@material-ui/core/Typography';
+import Card from '@material-ui/core/Card';
 
 function App() {
   const [list, setList] = useState([]);
@@ -42,33 +46,53 @@ function App() {
     };
 
     return(
-      <div style = {{ 
-        textAlign: "center", 
-        border: "2px solid black", 
-        padding: "20px",
+      <Card variant="outlined"
+        style={{ textAlign: "center",  
+        margin: "10px",
+        padding: "15px",
         minWidth: "200px",
-        background: "lightyellow"}}>
+        background: "whitesmoke"}}>
         {checkedOff ? (
-          <h1><strike>{item.title}</strike></h1>
+          <Typography variant="h4"><strike>{item.title}</strike></Typography>
         ) : (
           <>
-            <h1>{item.title}</h1>
-            <p>{item.description}</p>
-            <p>{item.date}</p>
+            <Typography variant="h4">{item.title}</Typography>
+            <Typography variant="body1">{item.description}</Typography>
+            <Typography variant="body1">{item.date}</Typography>
           </>
         )}
-        <button onClick={handleCheckOff} style={{margin: "10px"}}>Check Off</button>
-        <button onClick={handleDelete} style={{margin: "10px"}}>Delete</button>
-      </div>
+        <Button variant="outlined" color="primary" onClick={handleCheckOff} style={{margin: "10px"}}>Check Off</Button>
+        <Button variant="outlined" color="primary" onClick={handleDelete} style={{margin: "10px"}}>Delete</Button>
+        </Card>
     );
   }; 
 
   return(
     <div style = {{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-      <input type="text" placeholder = "Title" value={currentTitle} onChange={(e) => setCurrentTitle(e.target.value)}/>
-      <input type="text" placeholder = "Description" value={currentDescription} onChange={(e) => setCurrentDescription(e.target.value)}/>
-      <input type="text" placeholder = "Date" value={currentDate} onChange={(e) => setCurrentDate(e.target.value)}/>
-      <button onClick={handleAdd} style={{margin: "10px"}}>Add To-Do Item</button>
+      <Typography variant="h3">To-Do List</Typography>
+        <TextField
+        style={{ margin: "10px", backgroundColor: "whitesmoke", width: "20vw" }} 
+        type="text" 
+        placeholder = "Title" 
+        value={currentTitle} 
+        onChange={(e) => setCurrentTitle(e.target.value)}
+        />
+      <TextField 
+      style={{ margin: "10px", backgroundColor: "whitesmoke", width: "20vw" }} 
+      type="text" 
+      placeholder = "Description" 
+      multiline 
+      rowsMax={4}
+      value={currentDescription} 
+      onChange={(e) => setCurrentDescription(e.target.value)}
+      />
+      <TextField style={{ margin: "10px", backgroundColor: "whitesmoke", width: "20vw" }} 
+      type="date" 
+      placeholder = "Due Date" 
+      value={currentDate} 
+      onChange={(e) => setCurrentDate(e.target.value)}
+      />
+      <Button variant="contained" color="primary" onClick={handleAdd} style={{margin: "10px"}}>Add To-Do Item</Button>
       {list.map((item) => (<ToDoItem item={item}/>))} 
     </div>
   )
